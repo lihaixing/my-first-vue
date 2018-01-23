@@ -17,31 +17,40 @@ import stateManage2 from './components/stateManage2'
 Vue.use(VResource);
 Vue.use(VRouter);
 Vue.use(Vuex);
+import {ADD_TO_CART, SET_CART_ITEMS, SET_CHECKOUT_STATUS, RECEIVE_PRODUCTS} from './mutation-types'
 
 let store = new Vuex.Store({
   state: {
-    totalPrice: 0
+    totalPrice: 0,
+    count: 0,
+    nickName: 'haixing'
   },
   //getters不必每次都要取原始值，有点像computed
   getters: {
-    getTotalPrice (state) {
+    getTotalPrice(state) {
       return state.totalPrice
     }
   },
   mutations: {
-    increment (state, price) {
+    increment(state, price) {
       state.totalPrice += price;
     },
-    decrement (state, price) {
+    decrement(state, price) {
       state.totalPrice -= price;
+    },
+    [ADD_TO_CART](state) {
+      state.nickName += 'a'
     }
   },
   //actions只能调用mutations,而不能改变state
   //actions可以进行异步操作，而mutations只能同步操作
   actions: {
     // context是store
-    increase (context, price) {
-      context.commit('increment', price);
+    increase({commit}, price) {
+      commit('increment', price);
+    },
+    addCart({commit}){
+      commit('ADD_TO_CART');
     }
   }
 });
